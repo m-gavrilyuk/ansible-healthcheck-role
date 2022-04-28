@@ -1,0 +1,6 @@
+- name: copy nginx config
+  template:
+    src: nginx.conf
+    dest: /etc/nginx/sites-available/default
+    mode: 0600
+  notify: restart nginx

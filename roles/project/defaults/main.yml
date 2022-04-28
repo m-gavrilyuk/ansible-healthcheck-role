@@ -1,0 +1,9 @@
+SECRET_KEY: NRNRv6t5de57bRJXcWXEpkhQqzfqnj
+DB_NAME: healthcheck
+DB_USER: postgres
+DB_PASSWORD: healthcheck
+EMAIL_HOST_PASSWORD: healthcheck
+EMAIL_HOST_USER: healthchecks@example.ru
+EMAIL_HOST: smtp.example.ru
+DEFAULT_FROM_EMAIL: healthchecks@example.ru
+DB_HOST: db

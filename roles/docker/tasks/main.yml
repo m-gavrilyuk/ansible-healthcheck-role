@@ -1,0 +1,24 @@
+  - name: Add gpg key
+    ansible.builtin.apt_key:
+      url: https://download.docker.com/linux/debian/gpg
+      keyring: /usr/share/keyrings/docker-archive-keyring.gpg
+
+  - name: Add docker repo
+    ansible.builtin.apt_repository:
+      repo: deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian   {{ansible_distribution_release}} stable
+      state: present
+
+  - name: Install packages
+    apt:
+      pkg:
+       - docker-ce
+       - docker-ce-cli
+       - containerd.io
+      state: latest
+      update_cache: true
+
+  - name: install docker-compose
+    get_url:
+      url: "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-{{ansible_system}}-{{ansible_userspace_architecture}}"
+      dest: /usr/bin/docker-compose
+      mode: '0700'

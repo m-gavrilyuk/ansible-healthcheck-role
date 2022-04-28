@@ -1,0 +1,37 @@
+---
+- name: Configure healthchecks
+  become: true
+  hosts: all
+  vars:
+    DOMAIN: "healthcheck.prodoctorov.com"
+    SCHEMA: "https"
+    ssl_fullchain: "fullchain.cer"
+    ssl_key: "prodoctorov.com.key"
+
+  pre_tasks:
+    - name: install soft depencies
+      apt:
+        name:
+          - nginx
+          - wget
+          - git
+          - curl
+          - python3-apt
+          - apt-transport-https
+          - ca-certificates
+          - gnupg
+          - lsb-release
+        state: latest
+        update_cache: true
+
+  roles:
+    - docker
+    - project
+    - certs
+    - nginx
+
+  tasks:
+    - name: run project in docker
+      shell:
+        chdir: /var/lib/healthchecks/docker/
+        cmd: "/usr/bin/docker-compose down && /usr/bin/docker-compose up -d"
